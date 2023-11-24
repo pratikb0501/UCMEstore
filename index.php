@@ -36,9 +36,21 @@ switch($action) {
 					$isPassMatched = checkLogin($email,$password,$isAdmin);
             if($isPassMatched){
 								// create session and route to other page
+								$userDetails = getUserDetails($email);
+								print_r($userDetails);
+								$_SESSION["loggedIn"] = true;
+								$_SESSION["userID"] = $userDetails['userID'];
+								$_SESSION["isAdmin"] = $userDetails['isAdmin'];
+								if($userDetails['isAdmin'] == 'yes'){
+									header("Location: .?action=admin_all_products");
+								}else{
+									header("Location: .?action=all_products");
+								}
                 break;
             }else{
 								// invalid credentials flow
+								$message = "Invalid Credentials. Please try again!!";
+								$_SESSION['message'] = $message;
 						}
 				}
 				include('view/signin.php');
@@ -135,9 +147,12 @@ switch($action) {
 		
 		case "admin_all_orders":
 			$ordersList = getAllPlacedOrders();
-			
 			include('view/ordersPlaced.php');
 			break;
+
+		case "logout":
+			session_destroy();
+			header("Location: .?action=login");
 
 		default:{
 			include('view/404.php');

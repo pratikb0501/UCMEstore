@@ -36,9 +36,14 @@
 									I am an admin
 								</label>
 							</div>
-							<div class="mt-2" >
-								<p class="text-danger">Invalid Credentials. Please try again!!</p>
-							</div>
+							<?php 
+								if(isset($_SESSION['message'])){
+									echo '<div class="mt-2" ><p class="text-danger">';
+									echo $_SESSION["message"];
+									echo '</p></div>';
+									unset($_SESSION['message']);
+								}
+							?>
 							<div class="d-flex flex-column align-items-center">
 								<div class="d-grid gap-2 col-6 mx-auto">
 									<button type="submit" class="btn btn-danger mt-4">Login</button>

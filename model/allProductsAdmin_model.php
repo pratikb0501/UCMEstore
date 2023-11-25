@@ -3,6 +3,11 @@
 
     function getAllProducts(){
       // get all products
+      $sql = "SELECT * FROM PRODUCTS";
+      $stmt = Database::getDB()->prepare($sql);
+      $stmt->execute();
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      return $row;
     }
 
 

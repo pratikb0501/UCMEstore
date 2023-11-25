@@ -100,6 +100,7 @@ switch($action) {
 				$product_id = $_POST['deleteProduct'];
 				deleteProduct($product_id);
 			}
+			$allProducts = getAllProducts();
 			include('view/allProductsAdmin.php');
 			break;
 		case "admin_add_product":
@@ -112,6 +113,9 @@ switch($action) {
 				if(addProduct($productName,$productDescription,$price,$imageName)){
 					move_uploaded_file($_FILES['productImage']['tmp_name'],$targetDir);  //copy locally uploaded file to UCM-store/images folder
 					header("Location: .?action=admin_all_products");   // redirect if product is sucessfully inserted to Db
+					break;
+				}else{
+					$_SESSION['message'] = "Error Adding Product ! Please Try Again !";
 				}
 			}
 			include('view/addProduct.php');
@@ -120,7 +124,8 @@ switch($action) {
 		case "admin_update_product":
 			if (isset($_GET['product_id']) ) {
 				$product_id = $output['product_id'];
-				$productDetail = array("productName" => "Tumbler","description"=>"A viking brand 40oz handle tumbler with printed UCM logo 'Central Missouri'","price"=>"35.00","productId"=>"1321","productImage"=>"1700536486_Hostedwebsite.png" );
+				$productDetail = getProductByID($product_id);
+				// $productDetail = array("productName" => "Tumbler","description"=>"A viking brand 40oz handle tumbler with printed UCM logo 'Central Missouri'","price"=>"35.00","productId"=>"1321","productImage"=>"1700536486_Hostedwebsite.png" );
 				if(isset($_POST['productName']) && isset($_POST['productDescription']) && is_numeric($_POST['price']) && isset($_POST['price'])){
 					$productName = trim(filter_input(INPUT_POST, "productName", FILTER_SANITIZE_STRING));
 					$productDescription = trim(filter_input(INPUT_POST, "productDescription", FILTER_SANITIZE_STRING));

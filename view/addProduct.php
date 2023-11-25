@@ -22,7 +22,7 @@
               <form method="post" action="index.php?action=admin_add_product" enctype="multipart/form-data">
                 <div class="mt-3">
                   <label for="exampleFormControlInput1" class="form-label">Product Name</label>
-                  <input type="text" name="productName" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter product name" required>
+                  <input type="text" name="productName" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter product name" autofocus required>
                 </div>
                 <div class="form-group mt-3">
                   <label for="exampleFormControlTextarea1">Production Description</label>
@@ -37,6 +37,14 @@
                   <label for="formFile" class="form-label">Product Image</label>
                   <input class="form-control border-danger" name="productImage" type="file" id="formFile" accept="image/png, image/jpeg, image/jpg" onchange="displayImage(this)" required>
                 </div>
+                <?php 
+                  if(isset($_SESSION['message'])){
+                    echo '<div class="mt-2" ><p class="text-danger">';
+                    echo $_SESSION["message"];
+                    echo '</p></div>';
+                    unset($_SESSION['message']);
+                  }
+							  ?>
                 <button type="submit" class="btn btn-danger mt-3">Add Product</button>
               </form>
             </div>

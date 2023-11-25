@@ -15,37 +15,36 @@
 				<div class="products_container mt-5 mb-3">
 					<div class="row row-cols-1 row-cols-md-6 g-4">
           <?php
-            $allProducts = array("productName" => "Tumbler","description"=>"A viking brand 40oz handle tumbler with printed UCM logo 'Central Missouri'","price"=>"35.00","productId"=>"1321" );
-            $i=0;
-            while($i<12){
+            foreach($allProducts as $row){
               echo('<div class="col">');
               echo('<div class="card border border-danger border-2">');
-              echo('<img src="images/tumbler.png" class="card-img-top" alt="...">');
+              echo '<img class="card-img-top" alt="product-image" id="productImage" src=';
+              echo 'images/'.$row['productImage'];
+              echo '>';
               echo('<div class="card-body">');
               echo('<h5 class="card-title">');
-              echo($allProducts['productName']);
+              echo($row['productName']);
               echo('</h5>');
               // echo('<a href="#" class="btn btn-danger">');
               // echo('View Details');
               // echo('</a>');
               // echo('<p class="card-text">');
-              // echo($allProducts['description']);
+              // echo($row['productDescription']);
               // echo('</p>');
               echo('<h6> $');
-              echo($allProducts['price']);
+              echo($row['productPrice']);
               echo('</h6>');
               echo('<div class="d-flex justify-content-between align-items-center">');
               echo('<a  href=index.php?action=admin_update_product&&product_id=');
-              echo($allProducts['productId'].">");
+              echo($row['productID'].">");
               echo('<button type="submit" class="btn btn-danger mb-1">Edit Details</button></a>');
               echo('<form method="post" action="index.php?action=admin_all_products">');
-              echo('<input type="hidden" name="deleteProduct" value='.$allProducts['productId'].'>');
+              echo('<input type="hidden" name="deleteProduct" value='.$row['productID'].'>');
               echo('<button type="submit" class="btn btn-dark mb-1">Delete</button></form>');
               echo('</div>');
               echo('</div>');
               echo('</div>');
               echo('</div>');
-              $i++;
             }
           ?>
         </div>

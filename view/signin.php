@@ -20,7 +20,7 @@
 						<form action="." method="post">
 							<div class="mt-5">
 								<label for="exampleFormControlInput1" class="form-label">Email address</label>
-								<input type="email" name="email" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter your email" required>
+								<input type="email" name="email" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter your email" required autofocus>
 							</div>
 							<div class="mt-3">
 								<label for="inputPassword5" class="form-label">Password</label>

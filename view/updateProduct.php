@@ -32,16 +32,14 @@
                   <label for="exampleFormControlInput1" class="form-label">Product Name</label>
                   <!-- <input type="text" name="productName" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter product name" required> -->
                   <?php
-                    echo '<input type="text" name="productName" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter product name" required value=';
-                    echo $productDetail['productName'];
-                    echo '>'
+                    echo '<input type="text" name="productName" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter product name" required value="' . $productDetail['productName'] . '" >';
                   ?>
                 </div>
                 <div class="form-group mt-3">
                   <label for="exampleFormControlTextarea1">Production Description</label>
                   <textarea name="productDescription" placeholder="Enter production description" id="exampleFormControlTextarea1" required class="form-control border-danger mt-1" id="exampleFormControlTextarea1" rows="3">
                   <?php
-                    echo $productDetail['description'];
+                    echo $productDetail['productDescription'];
                   ?>
                   </textarea>
                 </div>
@@ -51,7 +49,7 @@
                   <!-- <input type="number" name="price" class="form-control border-danger" id="exampleFormControlInput1" min="1" step=".01" required> -->
                   <?php
                     echo '<input type="number" name="price" class="form-control border-danger" id="exampleFormControlInput1" min="1" step=".01" required value=';
-                    echo $productDetail['price'];
+                    echo $productDetail['productPrice'];
                     echo '>'
                   ?>
                 </div>
@@ -59,6 +57,14 @@
                   <label for="formFile" class="form-label">Product Image</label>
                   <input class="form-control border-danger" name="productImage" type="file" id="formFile" accept="image/png, image/jpeg, image/jpg" onchange="displayImage(this)">
                 </div>
+                <?php 
+                  if(isset($_SESSION['message'])){
+                    echo '<div class="mt-2" ><p class="text-danger">';
+                    echo $_SESSION["message"];
+                    echo '</p></div>';
+                    unset($_SESSION['message']);
+                  }
+							  ?>
                 <button type="submit" class="btn btn-danger mt-3">Update Product Details</button>
               </form>
             </div>

@@ -12,7 +12,10 @@
 
 
     function deleteProduct($productID){
-      $query = "DELETE from products WHERE productId = :productID";  // change table name and key
-      // delete from table;
+      $query = "DELETE from PRODUCTS WHERE productID = :productID";  // change table name and key
+      $stmt = Database::getDB()->prepare($query);
+      $row=$stmt->execute(array(":productID"=>$productID));
+      return $row;
+
     }
 ?>

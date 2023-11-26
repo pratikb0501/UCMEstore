@@ -1,9 +1,27 @@
 <?php
     // require_once "model/pdo.php";
 
-    function updateProduct($productName,$productDescription,$price,$imageName){
+    function updateProduct($productName,$productDescription,$price,$imageName,$productID){
       // echo $productName.' '.$productDescription.' '.$price.' '.$imageName;
-      return true; // if data updating is sucessfull else return false
+      $sql = "UPDATE PRODUCTS SET productName=:productName, productDescription=:productDescription, productPrice=:productPrice, productImage=:productImage
+                WHERE productID=:productID";
+        $stmt = Database::getDB()->prepare($sql);
+        try{
+          $stmt->execute(
+            array(
+              ':productName' => $productName,
+              ':productDescription' => $productDescription,
+              ':productPrice' => $price,
+              ':productImage' => $imageName,
+              ':productID' => $productID
+            )
+          );
+          return true;
+        }
+        catch(PDOException $e){
+            print_r($e);
+            return false;
+        }
     }
 
     function getProductByID($productID){

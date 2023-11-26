@@ -14,7 +14,12 @@
 			<main>
         <div class="row">
           <div class="col-5">
-            <img src="images/tumbler.png" class="card-img-top" alt="...">
+            <!-- <img src="images/tumbler.png" class="card-img-top" alt="..."> -->
+            <?php 
+              echo '<img class="card-img-top" alt="product-image" id="productImage" src=';
+              echo 'images/'.$productDetail['productImage'];
+              echo '>'
+            ?>
           </div>
           <div class="col-7">
             <div class="row mt-5"><h2 class="text-danger">Product Description</h2></div>
@@ -23,10 +28,10 @@
               echo $productDetail['productName'];
               echo '</h2></div>';
               echo '<div class="row mt-3"><h4>';
-              echo $productDetail['description'];
+              echo $productDetail['productDescription'];
               echo '</h4></div>';
               echo '<div class="row mt-3"><h5>$ ';
-              echo $productDetail['price'];
+              echo $productDetail['productPrice'];
               echo '</h5></div>';
             ?>
             <!-- <div class="row mt-5"><h2>Tumbler</h2></div>
@@ -37,14 +42,22 @@
               echo '<form method="post" class="row g-3" action=index.php?action=all_products&&product_id='.$_GET['product_id'].">";
             ?>
               <div class="col-auto">
-                <input type="number" class="form-control border-danger" id="product_quantity" placeholder="Enter Quantity"  min="1">
+                <input type="number" class="form-control border-danger" id="product_quantity" name="product_quantity" placeholder="Enter Quantity"  min="1">
               </div>
               <div class="col-auto">
                 <button type="submit" class="btn btn-danger mb-3">Add to Cart</button>
               </div>
             </form>
             <div class="mt-2" >
-									<p class="text-danger">Product Added to Cart!</p>
+								<!-- <p class="text-danger">Product Added to Cart!</p> -->
+                <?php 
+                  if(isset($_SESSION['cart_message'])){
+                    echo '<p class="text-danger">';
+                    echo $_SESSION["cart_message"];
+                    echo '</p>';
+                    // unset($_SESSION['message']);
+                  }
+							  ?>
 						</div>
             </div>
           </div>

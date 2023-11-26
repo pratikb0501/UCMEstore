@@ -22,7 +22,7 @@
               echo 'images/'.$row['productImage'];
               echo '>';
               echo('<div class="card-body">');
-              echo('<h5 class="card-title">');
+              echo('<h5 class="card-title" style="width: 207px;overflow: hidden;text-wrap: nowrap;">');
               echo($row['productName']);
               echo('</h5>');
               // echo('<a href="#" class="btn btn-danger">');

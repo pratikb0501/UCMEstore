@@ -98,7 +98,11 @@ switch($action) {
 		case "admin_all_products":
 			if(isset($_POST['deleteProduct'])){
 				$product_id = $_POST['deleteProduct'];
-				deleteProduct($product_id);
+				$productDetail = getProductByID($product_id);
+				if(deleteProduct($product_id)){
+					$deleteDirectory = 'images/'.$productDetail['productImage'];  //get old image for deletion
+					unlink($deleteDirectory);  // delete old image from repo
+				}
 			}
 			$allProducts = getAllProducts();
 			include('view/allProductsAdmin.php');
@@ -136,12 +140,14 @@ switch($action) {
 					} else {
 						$imageName = $productDetail['productImage'];
 					}
-					if(updateProduct($productName,$productDescription,$price,$imageName)){  //trigger update method from model
+					if(updateProduct($productName,$productDescription,$price,$imageName,$product_id)){  //trigger update method from model
 						if(isset($_FILES['productImage']['name']) && $_FILES['productImage']['size']>0){
 							$deleteDirectory = 'images/'.$productDetail['productImage'];  //get old image for deletion
 							$targetDir = 'images/'.$imageName;
 							unlink($deleteDirectory);  // delete old image from repo
 							move_uploaded_file($_FILES['productImage']['tmp_name'],$targetDir);  //copy locally uploaded file to UCM-store/images folder
+						}else{
+							$_SESSION['message'] = "Error Updating Product ! Please Try Again !";
 						}
 						header("Location: .?action=admin_all_products");   // redirect if product is sucessfully inserted to Db
 					}

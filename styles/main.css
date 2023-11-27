@@ -29,3 +29,12 @@
     height: 1.2rem;
 }
 
+.order-container{
+    border: 2px solid black;
+    margin: 1rem auto;
+    border-radius: 15px;
+    padding: 20px;
+    width: 50%;
+    height: 500px;
+}
+

@@ -21,51 +21,58 @@
               <h5 class="text-white">Cart Items</h5>
             </div>
             <div class="border border-danger">
-              <div class="row p-2">
-                <div class="col-2 d-flex justify-content-center">
-                  <img src="images/tumbler.png" alt="..." height="100px">
-                </div>
-                <div class="col-3 d-flex align-items-center">
-                  <div>Tumbler</div>
-                </div>
-                <div class="col-3 d-flex align-items-center">
-                  <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" min="1">
-                    <label for="floatingInput">Quantity</label>
+              <?php $cartTotal=0; ?>
+              <?php foreach($myCartProducts as $key=>$productDetail): ?> 
+                <div class="row p-2">
+                  <div class="col-2 d-flex justify-content-center">
+                    <a title="View product" href= <?="index.php?action=all_products&&product_id=". $productDetail['productID']; ?>>
+                      <img alt="productImage" height="100px" src= <?="images/". $productDetail['productImage']; ?>>
+                    </a>
+                  </div>
+                  <div class="col-2 d-flex align-items-center">
+                    <a title="View product" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href= <?="index.php?action=all_products&&product_id=". $productDetail['productID']; ?>>
+                      <div><?= $productDetail['productName']; ?></div>
+                    </a>
+                  </div>
+                  <div class="col-2 d-flex align-items-center">
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="floatingInput" min="1" disabled value=<?= $productDetail['productQuantity']; ?>>
+                      <label for="floatingInput">Quantity</label>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex align-items-center">
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="floatingInput" min="1" disabled value=<?= $productDetail['productPrice']; ?>>
+                      <label for="floatingInput">Unit Price ($)</label>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex align-items-center">
+                    <?php $cartTotal = $cartTotal + ($productDetail['productQuantity']*$productDetail['productPrice']); ?>
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="floatingInput" min="1" disabled value=<?= $productDetail['productQuantity']*$productDetail['productPrice']; ?>>
+                      <label for="floatingInput">Total ($)</label>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex align-items-center">
+                    <form method="post" action="index.php?action=my_cart">
+                      <input type="hidden" name="removeFromCart" value=<?= $productDetail['cartID']; ?>>
+                      <button type="submit" class="btn btn-dark">Remove</button>
+                    </form>
                   </div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
-                  $33.33
-                </div>
-                <div class="col-2 d-flex align-items-center">
-                  <button type="button" class="btn btn-dark">Remove</button>
-                </div>
-              </div>
-
-              <hr>
-
-              <div class="row p-2">
-                <div class="col-2 d-flex justify-content-center">
-                  <img src="images/tumbler.png" alt="..." height="100px">
-                </div>
-                <div class="col-3 d-flex align-items-center">
-                  <div>Tumbler</div>
-                </div>
-                <div class="col-3 d-flex align-items-center">
-                  <div class="form-floating">
-                    <input type="number" class="form-control" id="floatingInput" min="1">
-                    <label for="floatingInput">Quantity</label>
-                  </div>
-                </div>
-                <div class="col-2 d-flex align-items-center">
-                  $33.33
-                </div>
-                <div class="col-2 d-flex align-items-center">
-                  <button type="button" class="btn btn-dark">Remove</button>
-                </div>
-              </div>
-
-              
+                <?php 
+                  if($key != (count($myCartProducts)-1)){
+                    echo "<hr>";
+                  }
+                ?>
+              <?php endforeach; ?>
+              <?php 
+                if(empty($myCartProducts)){
+                  echo'<div class="d-flex justify-content-center">';
+                  echo '<p class="text-danger mt-3 mb-3">The Cart is Empty</p>';
+                  echo '</div>';
+                }
+              ?>             
             </div>
           </div>
           <div class="col-4">
@@ -75,16 +82,27 @@
             <div class="border border-danger">
               <div class="d-flex justify-content-between p-2">
                 <h6 class="ms-3">Cart Total:</h6>
-                <p class="me-3">$33.00</p>
+                <p class="me-3">$ <?= $cartTotal; ?></p>
               </div>
               <div class="d-flex justify-content-center mb-2">
-                <button type="button" class="btn btn-danger me-2">Proceed To Payment</button>
+                <form method="post" action="index.php?action=payment">
+                  <?php $_SESSION['totalPayment']=$cartTotal; 
+                    if($cartTotal > 0 ){
+                      echo '<button type="submit" class="btn btn-danger me-2">Proceed To Payment</button>';
+                    }
+                  ?>
+                </form>
               </div>
             </div>
           </div>
         </div>
 			</main>
 		</div>
+    <?php 
+      if(count($myCartProducts)>3){
+				require_once('view/footer.php');
+      }
+		?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	</body>
 

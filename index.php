@@ -13,6 +13,10 @@ require_once ('model/addProduct_model.php');
 require_once ('model/updateProduct_model.php');
 require_once ('model/ordersPlaced_model.php');
 require_once ('model/allProduct_model.php');
+require_once ('model/myCart_model.php');
+require_once ('model/orderedSuccessfully_model.php');
+require_once ('model/myOrderHistory_model.php');
+
 
 $action = $_SERVER['QUERY_STRING'];
 if(!$action){
@@ -21,7 +25,7 @@ if(!$action){
 			parse_str($action, $output);
 			$action = $output['action'];
 }
-// $action = "all_products";
+// $action = "ordered_successfully";
 
 
 
@@ -84,12 +88,12 @@ switch($action) {
 					$quantity = filter_input(INPUT_POST, "product_quantity", FILTER_VALIDATE_INT);
 					if($quantity && $quantity>0){
 						if(addProductToCart($quantity,$_SESSION["userID"],$product_id)){
-							$_SESSION['cart_message'] = "Product Added. Please Go to cart!";
+							$_SESSION['message'] = "Product Added. Please Go to cart!";
 						}else{
-							$_SESSION['cart_message'] = "Failed to add to cart.Please try againnn!";
+							$_SESSION['message'] = "Failed to add to cart.Please try againnn!";
 						}
 					}else{
-						$_SESSION['cart_message'] = "Please enter number more than 0";
+						$_SESSION['message'] = "Please enter number more than 0";
 					}
 				}
 				// $productDetail = array("productName" => "Tumbler","description"=>"A viking brand 40oz handle tumbler with printed UCM logo 'Central Missouri'","price"=>"35.00","productId"=>"1321" );
@@ -101,12 +105,23 @@ switch($action) {
 			include('view/allProducts.php');
 			break;
     case "my_cart":
-				include('view/myCart.php');
-				break;
+			if(isset($_POST['removeFromCart'])){
+				$cart_id = $_POST['removeFromCart'];
+				removeFromCart($cart_id);
+			}
+			$myCartProducts = getCartDetails($_SESSION["userID"]);
+			// $myCartProducts = getCartDetails(666);
+			include('view/myCart.php');
+			// echo "The count of array is--------".count($myCartProducts);
+			break;
 		case "user_profile":
 			include('view/profile.php');
 			break;
+
+
 		case "user_orders":
+			$myOrders = getMyOrderDetails($_SESSION["userID"]);
+			// $myOrders = getMyOrderDetails(666);
 			include('view/myOrderHistory.php');
 			break;
 		case "admin_all_products":
@@ -173,6 +188,27 @@ switch($action) {
 		case "admin_all_orders":
 			$ordersList = getAllPlacedOrders();
 			include('view/ordersPlaced.php');
+			break;
+		
+		case "payment":
+			if(isset($_POST['cardNumber']) && isset($_POST['cardHolder']) && isset($_POST['cvv']) && isset($_POST['valid_thru']) ){
+				$cardNumber = $_POST['cardNumber'];
+				$cvv = $_POST['cvv'];
+				if(strlen($creditCardNumber) != 16 && !is_numeric($creditCardNumber)){
+					$_SESSION['message'] = "Enter Valid 16 digit card Number !";
+				}
+				if(strlen($cvv) != 3 && !is_numeric($cvv)){
+					$_SESSION['message'] = "Enter Valid CVV/CVC/Security Code!";
+				}
+				header("Location: .?action=ordered_successfully");
+			}
+			include('view/payment.php');
+			break;
+		
+		case "ordered_successfully":
+			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
+			placeOrder($_SESSION["userID"]);
+			include('view/orderedSuccessfully.php');
 			break;
 
 		case "logout":

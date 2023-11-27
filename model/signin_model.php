@@ -34,4 +34,16 @@
     return $row;
   }
 
+  function getUserDetailsFromID($userID){
+    $sql = "SELECT * FROM users WHERE userID=:userID;";
+    $stmt = Database::getDB()->prepare($sql);
+    $stmt->execute(
+      array(
+        ':userID' => $userID
+      )
+    );
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row;
+  }
+
 ?>

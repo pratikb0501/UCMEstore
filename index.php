@@ -16,6 +16,7 @@ require_once ('model/allProduct_model.php');
 require_once ('model/myCart_model.php');
 require_once ('model/orderedSuccessfully_model.php');
 require_once ('model/myOrderHistory_model.php');
+require_once ('model/profile_model.php');
 
 
 $action = $_SERVER['QUERY_STRING'];
@@ -115,6 +116,22 @@ switch($action) {
 			// echo "The count of array is--------".count($myCartProducts);
 			break;
 		case "user_profile":
+			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
+			$email = $password = $firstName = $lastName = $contactNo = $address = $city = $state = $zipCode = '';
+			if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["contactNo"]) && isset($_POST["address"]) &&  isset($_POST["city"]) && isset($_POST["state"]) && isset($_POST["zipCode"])){
+				$email = trim(filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL));
+				$password = $_POST["password"];
+				$firstName = trim(htmlentities(filter_input(INPUT_POST, "firstName", FILTER_SANITIZE_STRING)));
+				$lastName = trim(htmlentities(filter_input(INPUT_POST, "lastName", FILTER_SANITIZE_STRING)));
+				$contactNo = trim(htmlentities(filter_input(INPUT_POST, "contactNo", FILTER_SANITIZE_STRING)));
+				$address = trim(htmlentities(filter_input(INPUT_POST, "address", FILTER_SANITIZE_STRING)));
+				$city = trim(htmlentities(filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING)));
+				$state = trim(htmlentities(filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING)));
+				$zipCode = trim(htmlentities(filter_input(INPUT_POST, "zipCode", FILTER_SANITIZE_STRING)));
+				$message = updateUser($email,$password,$firstName,$lastName,$contactNo,$address,$city,$state,$zipCode,$_SESSION["userID"]);
+				$_SESSION['message'] = $message;
+			}
+			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
 			include('view/profile.php');
 			break;
 

@@ -34,7 +34,7 @@
                   ?>
                 </div>
                 <div class="col-2 d-flex align-items-center">
-                  <div>Tumbler</div>
+                  <div><?php echo $productDetail['productName']?></div>
                 </div>
                 <div class="col-1 d-flex align-items-center">
                   <div class="form-floating">

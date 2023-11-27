@@ -1,5 +1,5 @@
 <?php
-    // require_once "model/pdo.php";
+    require_once "model/pdo.php";
 
     function updateProduct($productName,$productDescription,$price,$imageName,$productID){
       // echo $productName.' '.$productDescription.' '.$price.' '.$imageName;

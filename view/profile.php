@@ -22,7 +22,6 @@
                 <label for="userEmail" class="form-label">Email address</label>
                 <input type="email" name="email" class="form-control border-danger" id="userEmail" placeholder="Enter your email" required value=<?= $userDetails['email'] ?> >
               </div>
-              <p id="emailCheck"></p>
               <div class="mt-3">
                 <label for="inputPassword5" class="form-label">Password</label>
                 <input type="password" name="password" id="inputPassword5" class="form-control border-danger" placeholder="Enter your password" aria-describedby="passwordHelpBlock" required>
@@ -80,8 +79,4 @@
     ?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	</body>
-
 </html>
-
-<script type="text/javascript" src="jquery-3.7.1.js">
-</script>

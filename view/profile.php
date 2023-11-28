@@ -57,11 +57,11 @@
                 <input type="text" name="zipCode" class="form-control border-danger" id="zipCode" placeholder="Enter zip code" maxlength="5" required value=<?= $userDetails['zipcode'] ?>>
               </div>
               <?php 
-								if(isset($_SESSION['message'])){
+								if(isset($_SESSION['profile_message'])){
 									echo '<div class="mt-2" ><p class="text-danger">';
-									echo $_SESSION["message"];
+									echo $_SESSION["profile_message"];
 									echo '</p></div>';
-									unset($_SESSION['message']);
+									unset($_SESSION['profile_message']);
 								}
 							?>
               <div class="d-flex flex-column align-items-center">

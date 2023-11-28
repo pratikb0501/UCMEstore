@@ -150,9 +150,11 @@ switch($action) {
 				$state = trim(htmlentities(filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING)));
 				$zipCode = trim(htmlentities(filter_input(INPUT_POST, "zipCode", FILTER_SANITIZE_STRING)));
 				$message = updateUser($email,$password,$firstName,$lastName,$contactNo,$address,$city,$state,$zipCode,$_SESSION["userID"]);
-				$_SESSION['message'] = $message;
+				$_SESSION['profile_message'] = $message;
+				header("Location: index.php?action=user_profile");
+				break;
 			}
-			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
+			// $userDetails = getUserDetailsFromID($_SESSION["userID"]);
 			include('view/profile.php');
 			break;
 
@@ -296,5 +298,9 @@ switch($action) {
 			include('view/404.php');
         break;
     }
+}
+
+if($action != "user_profile"){
+	unset($_SESSION['profile_message']);
 }
 ?>

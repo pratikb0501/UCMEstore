@@ -24,7 +24,7 @@
             <!-- while($row = $result ->fetch_assoc())  use this loop below while fetching from db -->
             <?php foreach($ordersList as $key=>$productDetail): ?>
               <div class="row p-2">
-                <div class="col-2 d-flex justify-content-center">
+                <div class="col-1 d-flex justify-content-center">
                   <!-- <img src="images/tumbler.png" alt="..." height="100px"> -->
                   <?php 
                     echo '<img height="100px"';
@@ -68,10 +68,23 @@
                     <label for="totalPrice">Ordered By</label>
                   </div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-2 d-flex align-items-center" style="width: auto">
 									<div class="form-floating">
                     <input type="date" class="form-control" id="dateOrdered" disabled  value=<?= $productDetail['orderDate']; ?>>
                     <label for="dateOrdered">Date ordered</label>
+                  </div>
+                </div>
+                <div class="col-1 d-flex align-items-center">
+                  <div class="form-floating">
+                    <form id="orderStatus" method="post" action=".?action=admin_all_orders">
+                      <input type="hidden" name="orderID" value=<?= $productDetail['orderID']; ?>>
+                      <label for="floatingSelect" class="text-danger">Order Status</label>
+                      <select class="form-select" id="floatingSelect" name="order_status"  aria-label="Floating label select example" onchange="submitForm()">
+                        <option value="pending" <?php if ($productDetail['orderStatus'] == 'pending') echo 'selected'; ?>>Pending</option>
+                        <option value="shipped" <?php if ($productDetail['orderStatus'] == 'shipped') echo 'selected'; ?>>Shipped</option>
+                        <option value="delivered" <?php if ($productDetail['orderStatus'] == 'delivered') echo 'selected'; ?>>Delivered</option>
+                      </select>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -92,6 +105,11 @@
       }
 		?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+      function submitForm() {
+          document.getElementById("orderStatus").submit();
+      }
+    </script>
 	</body>
 
 </html>

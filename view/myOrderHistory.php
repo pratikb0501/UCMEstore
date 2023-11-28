@@ -26,31 +26,37 @@
                 <div class="col-2 d-flex justify-content-center">
                   <img alt="productImage" height="100px" src= <?="images/". $productDetail['productImage']; ?>>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-3 d-flex align-items-center">
                   <div><?= $productDetail['productName']; ?></div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-1 d-flex align-items-center">
                   <div class="form-floating">
                     <input type="number" class="form-control" id="floatingInput" min="1" disabled value=<?= $productDetail['productQuantity']; ?>>
                     <label for="floatingInput">Quantity</label>
                   </div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-1 d-flex align-items-center">
 									<div class="form-floating">
                     <input type="number" class="form-control" id="unitPrice" min="1" disabled value=<?= $productDetail['productPrice']; ?>>
                     <label for="unitPrice">Unit Price ($)</label>
                   </div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="col-1 d-flex align-items-center">
 									<div class="form-floating">
                     <input type="number" class="form-control" id="totalPrice" min="1" disabled value=<?= $productDetail['productQuantity']*$productDetail['productPrice']; ?>>
                     <label for="totalPrice">Total Price ($)</label>
                   </div>
                 </div>
+                <div class="col-2 d-flex align-items-center" style="width: auto">
+									<div class="form-floating">
+                    <input type="date" class="form-control" id="dateOrdered" disabled  value=<?= $productDetail['orderDate']; ?>>
+                    <label for="dateOrdered">Date ordered</label>
+                  </div>
+                </div>
                 <div class="col-2 d-flex align-items-center">
 									<div class="form-floating">
-                    <input type="date" class="form-control" id="dateOrdered" min="1" disabled  value=<?= $productDetail['orderDate']; ?>>
-                    <label for="dateOrdered">Date ordered</label>
+                    <input type="text" class="form-control" id="orderStatus" disabled value=<?= $productDetail['orderStatus']; ?>>
+                    <label for="totalPrice">Order Status</label>
                   </div>
                 </div>
               </div>

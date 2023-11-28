@@ -17,7 +17,7 @@
 						<div class="d-flex justify-content-center">
 							<h2>Login</h2>
 						</div>
-						<form action="." method="post">
+						<form action=".?action=login" method="post">
 							<div class="mt-5">
 								<label for="exampleFormControlInput1" class="form-label">Email address</label>
 								<input type="email" name="email" class="form-control border-danger" id="exampleFormControlInput1" placeholder="Enter your email" required autofocus>

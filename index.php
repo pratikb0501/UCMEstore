@@ -57,10 +57,14 @@ switch($action) {
 								// invalid credentials flow
 								$message = "Invalid Credentials. Please try again!!";
 								$_SESSION['message'] = $message;
+								header("Location: index.php?action=login");
+								break;
 						}
 				}
 				include('view/signin.php');
 				break;
+
+
     case 'register':
         // header("Location: .?action=show_admin_menu");
 				$email = $password = $firstName = $lastName = $contactNo = $address = $city = $state = $zipCode = '';
@@ -245,6 +249,9 @@ switch($action) {
 			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
 				header("Location: index.php?action=login");
 				break;
+			}
+			if(isset($_POST['order_status']) && isset($_POST['orderID'])){
+				updateOrderStatus($_POST['orderID'],$_POST['order_status']);
 			}
 			$ordersList = getAllPlacedOrders();
 			include('view/ordersPlaced.php');

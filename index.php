@@ -21,7 +21,7 @@ require_once ('model/profile_model.php');
 
 $action = $_SERVER['QUERY_STRING'];
 if(!$action){
-    $action = "login";
+    $action = "all_products";
 		}else{
 			parse_str($action, $output);
 			$action = $output['action'];
@@ -79,9 +79,14 @@ switch($action) {
 				}
         include('view/signup.php');
         break;
+
+
     case "all_products":
-			
 			if (isset($_GET['product_id']) ) {
+				if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+					header("Location: index.php?action=login");
+					break;
+				}
 				$product_id = $output['product_id'];
 				$productDetail = getProductByID($product_id);
 				if(isset($_POST["product_quantity"])){
@@ -105,7 +110,13 @@ switch($action) {
 			$allProducts = getAllProducts();
 			include('view/allProducts.php');
 			break;
+
+
     case "my_cart":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			if(isset($_POST['removeFromCart'])){
 				$cart_id = $_POST['removeFromCart'];
 				removeFromCart($cart_id);
@@ -115,7 +126,13 @@ switch($action) {
 			include('view/myCart.php');
 			// echo "The count of array is--------".count($myCartProducts);
 			break;
+
+
 		case "user_profile":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
 			$email = $password = $firstName = $lastName = $contactNo = $address = $city = $state = $zipCode = '';
 			if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["contactNo"]) && isset($_POST["address"]) &&  isset($_POST["city"]) && isset($_POST["state"]) && isset($_POST["zipCode"])){
@@ -137,11 +154,21 @@ switch($action) {
 
 
 		case "user_orders":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			$myOrders = getMyOrderDetails($_SESSION["userID"]);
 			// $myOrders = getMyOrderDetails(666);
 			include('view/myOrderHistory.php');
 			break;
+			
+			
 		case "admin_all_products":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			if(isset($_POST['deleteProduct'])){
 				$product_id = $_POST['deleteProduct'];
 				$productDetail = getProductByID($product_id);
@@ -153,25 +180,36 @@ switch($action) {
 			$allProducts = getAllProducts();
 			include('view/allProductsAdmin.php');
 			break;
+				
+				
 		case "admin_add_product":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			if(isset($_POST['productName']) && isset($_POST['productDescription']) && is_numeric($_POST['price']) && isset($_POST['price']) && isset($_FILES['productImage']['name'])){
 				$productName = trim(filter_input(INPUT_POST, "productName", FILTER_SANITIZE_STRING));
-				$productDescription = trim(filter_input(INPUT_POST, "productDescription", FILTER_SANITIZE_STRING));
-				$price = $_POST['price'];
-				$imageName = time().'_'.$_FILES['productImage']['name'];
-				$targetDir = 'images/'.$imageName;
-				if(addProduct($productName,$productDescription,$price,$imageName)){
-					move_uploaded_file($_FILES['productImage']['tmp_name'],$targetDir);  //copy locally uploaded file to UCM-store/images folder
-					header("Location: .?action=admin_all_products");   // redirect if product is sucessfully inserted to Db
-					break;
-				}else{
-					$_SESSION['message'] = "Error Adding Product ! Please Try Again !";
-				}
+			$productDescription = trim(filter_input(INPUT_POST, "productDescription", FILTER_SANITIZE_STRING));
+			$price = $_POST['price'];
+			$imageName = time().'_'.$_FILES['productImage']['name'];
+			$targetDir = 'images/'.$imageName;
+			if(addProduct($productName,$productDescription,$price,$imageName)){
+				move_uploaded_file($_FILES['productImage']['tmp_name'],$targetDir);  //copy locally uploaded file to UCM-store/images folder
+				header("Location: .?action=admin_all_products");   // redirect if product is sucessfully inserted to Db
+				break;
+			}else{
+				$_SESSION['message'] = "Error Adding Product ! Please Try Again !";
 			}
-			include('view/addProduct.php');
-			break;
-
+		}
+		include('view/addProduct.php');
+		break;
+		
+		
 		case "admin_update_product":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			if (isset($_GET['product_id']) ) {
 				$product_id = $output['product_id'];
 				$productDetail = getProductByID($product_id);
@@ -201,13 +239,23 @@ switch($action) {
 				include('view/updateProduct.php');
 				break;
 			}
-		
+			
+			
 		case "admin_all_orders":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			$ordersList = getAllPlacedOrders();
 			include('view/ordersPlaced.php');
 			break;
 		
+		
 		case "payment":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			if(isset($_POST['cardNumber']) && isset($_POST['cardHolder']) && isset($_POST['cvv']) && isset($_POST['valid_thru']) ){
 				$cardNumber = $_POST['cardNumber'];
 				$cvv = $_POST['cvv'];
@@ -220,9 +268,14 @@ switch($action) {
 				header("Location: .?action=ordered_successfully");
 			}
 			include('view/payment.php');
-			break;
+		break;
 		
+
 		case "ordered_successfully":
+			if(!isset($_SESSION["loggedIn"]) && !isset($_SESSION["userID"])){
+				header("Location: index.php?action=login");
+				break;
+			}
 			$userDetails = getUserDetailsFromID($_SESSION["userID"]);
 			placeOrder($_SESSION["userID"]);
 			include('view/orderedSuccessfully.php');
@@ -230,7 +283,7 @@ switch($action) {
 
 		case "logout":
 			session_destroy();
-			header("Location: .?action=login");
+			header("Location: index.php?action=login");
 
 		default:{
 			include('view/404.php');

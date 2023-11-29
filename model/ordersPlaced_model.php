@@ -12,9 +12,6 @@
     }
 
     function updateOrderStatus($orderID,$orderStatus){
-      echo "orderID".$orderID;
-      echo "<br>orderStatus".$orderStatus;
-
       $sql = "UPDATE orders SET orderStatus=:orderStatus WHERE orderID=:orderID";
       $stmt = Database::getDB()->prepare($sql);
       try{

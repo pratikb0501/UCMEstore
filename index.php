@@ -255,7 +255,9 @@ switch($action) {
 				break;
 			}
 			if(isset($_POST['order_status']) && isset($_POST['orderID'])){
-				updateOrderStatus($_POST['orderID'],$_POST['order_status']);
+				if(updateOrderStatus($_POST['orderID'],$_POST['order_status'])){
+					header("Location: index.php?action=admin_all_orders");
+				}
 			}
 			$ordersList = getAllPlacedOrders();
 			include('view/ordersPlaced.php');

@@ -98,13 +98,15 @@ switch($action) {
 					$quantity = filter_input(INPUT_POST, "product_quantity", FILTER_VALIDATE_INT);
 					if($quantity && $quantity>0){
 						if(addProductToCart($quantity,$_SESSION["userID"],$product_id)){
-							$_SESSION['message'] = "Product Added. Please Go to cart!";
+							$_SESSION['cart_message'] = "Product Added. Please Go to cart!";
 						}else{
-							$_SESSION['message'] = "Failed to add to cart.Please try againnn!";
+							$_SESSION['cart_message'] = "Failed to add to cart.Please try again!";
 						}
 					}else{
-						$_SESSION['message'] = "Please enter number more than 0";
+						$_SESSION['cart_message'] = "Please enter number more than 0";
 					}
+					header("Location: index.php?action=all_products&&product_id=".$product_id);
+					break;
 				}
 				// $productDetail = array("productName" => "Tumbler","description"=>"A viking brand 40oz handle tumbler with printed UCM logo 'Central Missouri'","price"=>"35.00","productId"=>"1321" );
 				
@@ -299,8 +301,12 @@ switch($action) {
         break;
     }
 }
-
 if($action != "user_profile"){
 	unset($_SESSION['profile_message']);
 }
+
+if($action != "all_products" || !isset($_GET['product_id'])){
+	unset($_SESSION['cart_message']);
+}
+
 ?>

@@ -33,7 +33,7 @@
                 </div>
                 <div class="mt-3" style="width: 45%;">
                   <label for="exampleFormControlInput1" class="form-label">Valid Thru</label>
-                  <input type="month" name="valid_thru" class="form-control border-danger" id="exampleFormControlInput1" required>
+                  <input type="month" name="valid_thru" min="2023-11" class="form-control border-danger" id="exampleFormControlInput1" required>
                 </div>
 						  </div>
               <?php 

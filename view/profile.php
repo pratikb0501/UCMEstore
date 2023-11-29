@@ -61,7 +61,7 @@
 									echo '<div class="mt-2" ><p class="text-danger">';
 									echo $_SESSION["profile_message"];
 									echo '</p></div>';
-									unset($_SESSION['profile_message']);
+									// unset($_SESSION['profile_message']);
 								}
 							?>
               <div class="d-flex flex-column align-items-center">

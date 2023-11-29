@@ -51,11 +51,11 @@
             <div class="mt-2" >
 								<!-- <p class="text-danger">Product Added to Cart!</p> -->
                 <?php 
-                  if(isset($_SESSION['message'])){
+                  if(isset($_SESSION['cart_message'])){
                     echo '<p class="text-danger">';
-                    echo $_SESSION["message"];
+                    echo $_SESSION["cart_message"];
                     echo '</p>';
-                    unset($_SESSION['message']);
+                    // unset($_SESSION['cart_message']);
                   }
 							  ?>
 						</div>

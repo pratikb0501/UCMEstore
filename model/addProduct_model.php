@@ -3,7 +3,7 @@
 
     function addProduct($productName,$productDescription,$productPrice,$imageName){
       // return false;
-      $sql = "INSERT INTO products (productName, productDescription, productPrice, productImage) 
+      $sql = "INSERT INTO PRODUCTS (productName, productDescription, productPrice, productImage) 
                 VALUES(:productName, :productDescription, :productPrice, :productImage)";
       $stmt = Database::getDB()->prepare($sql);
       try{

@@ -14,7 +14,7 @@
   }
 
   function removeFromCart($cartID){
-    $query = "DELETE from cart WHERE cartID = :cartID";  // change table name and key
+    $query = "DELETE from CART WHERE cartID = :cartID";  // change table name and key
     $stmt = Database::getDB()->prepare($query);
     $row=$stmt->execute(array(":cartID"=>$cartID));
     return $row;

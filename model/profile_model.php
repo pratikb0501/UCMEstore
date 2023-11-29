@@ -5,7 +5,7 @@
       $row = checkOtherUserEmail($email);
       if(!$row){
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE users SET email=:email,password=:password,firstname=:firstName,lastName=:lastName,phone=:phone,address=:address,city=:city,state=:state,zipcode=:zipcode,isAdmin=:isAdmin WHERE userID=:userID";
+        $sql = "UPDATE USERS SET email=:email,password=:password,firstname=:firstName,lastName=:lastName,phone=:phone,address=:address,city=:city,state=:state,zipcode=:zipcode,isAdmin=:isAdmin WHERE userID=:userID";
         $stmt = Database::getDB()->prepare($sql);
         try{
           $stmt->execute(
@@ -36,7 +36,7 @@
 
     function checkOtherUserEmail($email){
       $userID = $_SESSION["userID"];
-      $sql = "SELECT * FROM users WHERE email=:email AND userID !=:userID";
+      $sql = "SELECT * FROM USERS WHERE email=:email AND userID !=:userID";
       $stmt = Database::getDB()->prepare($sql);
       $stmt->execute(
         array(

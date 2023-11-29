@@ -10,7 +10,7 @@
     if($row){
       return updateCartProduct($productQuantity,$row['cartID']);  //update quantity if already added in cart
     }else{   // product not present in cart then add to cart
-      $sql = "INSERT INTO cart (productID, userID, productQuantity) 
+      $sql = "INSERT INTO CART (productID, userID, productQuantity) 
                 VALUES(:productID, :userID, :productQuantity)";
       $stmt = Database::getDB()->prepare($sql);
       try{
@@ -32,7 +32,7 @@
   }
 
   function checkProductInCart($userID,$productID){
-    $sql = "SELECT * FROM cart where productID=:productID AND userID=:userID";
+    $sql = "SELECT * FROM CART where productID=:productID AND userID=:userID";
     $stmt = Database::getDB()->prepare($sql);
     $stmt->execute(array(':productID'=>$productID,'userID'=>$userID));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -41,7 +41,7 @@
 
   function updateCartProduct($productQuantity,$cartID){
     // echo $productName.' '.$productDescription.' '.$price.' '.$imageName;
-    $sql = "UPDATE cart SET productQuantity=:productQuantity
+    $sql = "UPDATE CART SET productQuantity=:productQuantity
               WHERE cartID=:cartID";
       $stmt = Database::getDB()->prepare($sql);
       try{

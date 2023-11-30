@@ -3,7 +3,7 @@
 
     function updateProduct($productName,$productDescription,$price,$imageName,$productID){
       // echo $productName.' '.$productDescription.' '.$price.' '.$imageName;
-      $sql = "UPDATE PRODUCTS SET productName=:productName, productDescription=:productDescription, productPrice=:productPrice, productImage=:productImage
+      $sql = "UPDATE products SET productName=:productName, productDescription=:productDescription, productPrice=:productPrice, productImage=:productImage
                 WHERE productID=:productID";
         $stmt = Database::getDB()->prepare($sql);
         try{
@@ -25,7 +25,7 @@
     }
 
     function getProductByID($productID){
-      $sql = "SELECT * FROM PRODUCTS where productID=:productID";
+      $sql = "SELECT * FROM products where productID=:productID";
       $stmt = Database::getDB()->prepare($sql);
       $stmt->execute(array(':productID'=>$productID));
       $row = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -3,7 +3,7 @@
 
     function getAllProducts(){
       // get all products
-      $sql = "SELECT * FROM PRODUCTS";
+      $sql = "SELECT * FROM products";
       $stmt = Database::getDB()->prepare($sql);
       $stmt->execute();
       $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -12,7 +12,7 @@
 
 
     function deleteProduct($productID){
-      $query = "DELETE from PRODUCTS WHERE productID = :productID";  // change table name and key
+      $query = "DELETE from products WHERE productID = :productID";  // change table name and key
       $stmt = Database::getDB()->prepare($query);
       $row=$stmt->execute(array(":productID"=>$productID));
       return $row;

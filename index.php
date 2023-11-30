@@ -43,6 +43,7 @@ switch($action) {
             if($isPassMatched){
 								// create session and route to other page
 								$userDetails = getUserDetails($email);
+								// print_r($userDetails);
 								updateUsersCount($userDetails);
 								$_SESSION["loggedIn"] = true;
 								$_SESSION["userID"] = $userDetails['userID'];

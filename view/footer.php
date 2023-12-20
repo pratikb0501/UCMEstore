@@ -18,12 +18,6 @@
                   <img class="footer--img" title="Pratik's LinkedIn" src="images/linkedin.png" alt="linkedin">
                 </a>
               </div>
-              <div class="me-3 d-flex flex-column align-items-center">
-                <div>Ruthvik Reddy</div>
-                <a class="footer--logo" href="https://www.linkedin.com/in/ruthvik-reddy-gaddam-331469219/" target="blank">
-                  <img class="footer--img" title="Ruthvik's LinkedIn" src="images/linkedin.png" alt="linkedin">
-                </a>
-              </div>
             </div>
           </div>
         </div>	
